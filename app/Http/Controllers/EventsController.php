@@ -40,6 +40,28 @@ class EventsController extends BaseController
     }
 
     public function getFutureEventsWithWorkshops() {
-        throw new \Exception('implement in coding task 2');
+        //throw new \Exception('implement in coding task 2');
+        $workshops = DB::table('workshop_events')->where('start', '>', date('Y-m-d H:i:s')))->get();
+
+        foreach ($workshops as $key => $events) {
+        	$response[] = array(
+        			"id" => $events->id,
+        			"name" => $events->name,
+        			"created_at" => $events->created_at,
+        			"updated_at" => $events->updated_at,
+        			"workshops" => array(
+        				"id" => $events->id,
+        				"start" => $events->start,
+        				"end" => $events->end,
+        				"event_id" => $events->event_id,
+        				"name" => $events->name,
+        				"created_at" => $events->created_at,
+        				"updated_at" => $events->updated_at,
+        			)
+        	);
+        	# code...
+        }
+        echo json_encode($response);
+        exit();
     }
 }
